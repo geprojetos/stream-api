@@ -1,7 +1,7 @@
 import express, { Application, json, Request, Response } from "express";
 import cors from "cors";
-import DashboardRoutes from "../routes/dashboard";
-import StreamRoutes from "../routes/movie/create";
+import DashboardRoutes from "../frameworks-layer/routes/dashboard";
+import MovieRoutes from "../frameworks-layer/routes/movie/create";
 
 class App {
   public express: Application;
@@ -23,7 +23,7 @@ class App {
 
   private routes() {
     new DashboardRoutes(this.express);
-    new StreamRoutes(this.express);
+    new MovieRoutes(this.express);
   }
 }
 
