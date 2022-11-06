@@ -1,6 +1,6 @@
 import { Application } from "../../../app";
 import { logger } from "../../../logger";
-import { createStreamPresentation } from "../../../presentation/stream/create";
+import { createMoviePresentation } from "../../../presentation/movie/create";
 
 class StreamRoutes {
   private express: Application;
@@ -12,7 +12,7 @@ class StreamRoutes {
 
   private create() {
     this.express.post("/create", async (request, response) => {
-      const result = await createStreamPresentation.execute(request);
+      const result = await createMoviePresentation.execute(request);
       return response.send(result);
     });
   }

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "build": "sucrase ./src -d ./dist --transform typescript,imports",
+    "build": "tsc --build",
+    "build:sucrase": "sucrase ./src -d ./dist --transform typescript,imports",
     "test": "vitest --reporter verbose",
     "coverage": "vitest run --coverage"
   },

@@ -1,4 +1,4 @@
-import StreamRepository from "./stream";
-import { IStreamAdapter, IStreamResponse } from "./stream/IStreamAdapter";
+import MovieRepository from "./movie";
+import { IMovieAdapter } from "./movie/IStreamAdapter";
 
-export { StreamRepository, IStreamAdapter, IStreamResponse };
+export { MovieRepository, IMovieAdapter };

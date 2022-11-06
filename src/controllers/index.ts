@@ -1,4 +1,3 @@
-import CreateStreamController from "./stream/create";
-import { ICreateStreamResponse } from "./stream/create/ICreateStreamResponse";
+import CreateMovieController from "./movie/create";
 
-export { CreateStreamController, ICreateStreamResponse };
+export { CreateMovieController };

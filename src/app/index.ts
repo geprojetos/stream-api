@@ -1,7 +1,7 @@
 import express, { Application, json, Request, Response } from "express";
 import cors from "cors";
 import DashboardRoutes from "../routes/dashboard";
-import StreamRoutes from "../routes/stream/create";
+import StreamRoutes from "../routes/movie/create";
 
 class App {
   public express: Application;

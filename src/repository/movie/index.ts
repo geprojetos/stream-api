@@ -1,12 +1,12 @@
-import { ICreateStreamResponse } from "../../controllers";
 import { IStream, Stream } from "../../domain";
 import { logger } from "../../logger";
+import { ICreateMovieResponse } from "../../useCase/movie";
 import Messages from "../../utils/Messages";
 import Status from "../../utils/Status";
 import HelperDataBase from "./HelperDataBase";
-import { IStreamAdapter } from "./IStreamAdapter";
+import { IMovieAdapter } from "./IStreamAdapter";
 
-class StreamRepository implements IStreamAdapter {
+class MovieRepository implements IMovieAdapter {
   private _streamList: IStream[];
   private _helperDataBase: HelperDataBase;
 
@@ -20,7 +20,7 @@ class StreamRepository implements IStreamAdapter {
     this._helperDataBase._readStreamDataBase();
   }
 
-  public async create(stream: Stream): Promise<ICreateStreamResponse> {
+  public async create(stream: Stream): Promise<ICreateMovieResponse> {
     try {
       return this._createSuccess(stream);
     } catch (error) {
@@ -49,4 +49,4 @@ class StreamRepository implements IStreamAdapter {
   }
 }
 
-export default StreamRepository;
+export default MovieRepository;
