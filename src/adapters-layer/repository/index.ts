@@ -1,4 +1,4 @@
-import MovieRepository from "./movie";
-import { IMovieAdapter } from "./movie/IStreamAdapter";
+import MovieRepository from "./movie/create";
+import { ICreateMovieAdapter } from "./movie/create/ICreateMovieAdapter";
 
-export { MovieRepository, IMovieAdapter };
+export { MovieRepository, ICreateMovieAdapter };

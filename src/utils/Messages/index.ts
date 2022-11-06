@@ -1,9 +1,10 @@
 class Messages {
-  static stream() {
+  static movie() {
     return {
-      createSuccessfully: "Stream created successfully",
-      saveInDataBase: "Stream saved in the database",
-      errorSaveInDataBase: "Error on save stream in data base",
+      createSuccessfully: "Movie created successfully",
+      saveInDataBase: "Movie saved in the database",
+      errorSaveInDataBase: "Error on save movie in data base",
+      alreadyExisting: "Movie already existing",
     };
   }
 }

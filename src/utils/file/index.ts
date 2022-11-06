@@ -30,7 +30,7 @@ class File {
   _saveMovieDataBase(stream: IStream[]) {
     writeFile(this._path, JSON.stringify(stream), (error) => {
       if (error) {
-        throw new Error(Messages.stream().errorSaveInDataBase);
+        throw new Error(Messages.movie().errorSaveInDataBase);
       }
     });
   }
