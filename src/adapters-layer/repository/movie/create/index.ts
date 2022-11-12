@@ -13,11 +13,6 @@ class MovieRepository implements ICreateMovieAdapter {
   constructor() {
     this._movieList = [];
     this._file = new File(this._movieList);
-    this._initialize();
-  }
-
-  private _initialize() {
-    this._file._readMovieDataBase();
   }
 
   public async create(movie: Stream): Promise<ICreateMovieResponse> {
@@ -53,7 +48,7 @@ class MovieRepository implements ICreateMovieAdapter {
     this._file._saveMovieDataBase(this._movieList);
 
     return {
-      statusCode: Status.ok(),
+      statusCode: Status.created(),
       message: Messages.movie().saveInDataBase,
       stream: movie.stream(),
     };

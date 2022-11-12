@@ -1,4 +1,4 @@
-import InMemoryMovieRepository from "../../../../__test__/repository/movie/InMemoryMovieRepository";
+import InMemoryCreateRepository from "../../../../__test__/repository/movie/InMemoryCreateRepository";
 import { IStream, Stream } from "../../../../enterprise-layer/domain";
 import Status from "../../../../utils/status";
 import Messages from "../../../../utils/messages";
@@ -9,15 +9,15 @@ describe("MovieRepository", async () => {
     category: "test",
     description: "test",
   };
-  let inMemoryMovieRepository: InMemoryMovieRepository;
+  let inMemoryMovieRepository: InMemoryCreateRepository;
 
   beforeAll(() => {
-    inMemoryMovieRepository = new InMemoryMovieRepository();
+    inMemoryMovieRepository = new InMemoryCreateRepository();
   });
 
-  test("should be able create movie with status code 200", async () => {
+  test("should be able create movie with status code 201", async () => {
     const result = await inMemoryMovieRepository.create(new Stream(movieTest));
-    expect(result.statusCode).toBe(200);
+    expect(result.statusCode).toBe(Status.created());
   });
 
   test("should be able error create movie with status code 409", async () => {

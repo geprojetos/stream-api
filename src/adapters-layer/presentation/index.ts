@@ -1,3 +1,4 @@
 import { createMoviePresentation } from "./movie/create";
+import { listMoviePresentation } from "./movie/list";
 
-export { createMoviePresentation };
+export { createMoviePresentation, listMoviePresentation };

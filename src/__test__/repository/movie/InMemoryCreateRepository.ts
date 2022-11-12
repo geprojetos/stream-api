@@ -5,7 +5,7 @@ import Messages from "../../../utils/messages";
 import Status from "../../../utils/status";
 import { ICreateMovieAdapter } from "../../../adapters-layer/repository/movie/create/ICreateMovieAdapter";
 
-class InMemoryMovieRepository implements ICreateMovieAdapter {
+class InMemoryCreateRepository implements ICreateMovieAdapter {
   private _movieList: IStream[];
 
   constructor() {
@@ -44,7 +44,7 @@ class InMemoryMovieRepository implements ICreateMovieAdapter {
     this._movieList.push(movie.stream());
 
     return {
-      statusCode: Status.ok(),
+      statusCode: Status.created(),
       message: Messages.movie().saveInDataBase,
       stream: movie.stream(),
     };
@@ -59,4 +59,4 @@ class InMemoryMovieRepository implements ICreateMovieAdapter {
   }
 }
 
-export default InMemoryMovieRepository;
+export default InMemoryCreateRepository;

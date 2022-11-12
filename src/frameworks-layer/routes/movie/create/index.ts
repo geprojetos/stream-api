@@ -3,14 +3,16 @@ import { createMoviePresentation } from "../../../../adapters-layer/presentation
 
 class MovieRoutes {
   private express: Application;
+  private _baseUrl: string;
 
-  constructor(expressApplication: Application) {
+  constructor(expressApplication: Application, baseUrl: string) {
     this.express = expressApplication;
+    this._baseUrl = baseUrl;
     this.create();
   }
 
   private create() {
-    this.express.post("/create", async (request, response) => {
+    this.express.post(`${this._baseUrl}/create`, async (request, response) => {
       const result = await createMoviePresentation.execute(request);
       return response.send(result);
     });

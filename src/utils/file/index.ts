@@ -16,6 +16,7 @@ class File {
 
   constructor(streamList: IStream[]) {
     this._streamList = streamList;
+    this._readMovieDataBase();
   }
 
   _readMovieDataBase() {
@@ -33,6 +34,10 @@ class File {
         throw new Error(Messages.movie().errorSaveInDataBase);
       }
     });
+  }
+
+  getMovies(): IStream[] {
+    return this._streamList;
   }
 }
 

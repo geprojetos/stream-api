@@ -1,7 +1,7 @@
 import express, { Application, json, Request, Response } from "express";
 import cors from "cors";
 import DashboardRoutes from "../frameworks-layer/routes/dashboard";
-import MovieRoutes from "../frameworks-layer/routes/movie/create";
+import MovieRoutes from "../frameworks-layer/routes/movie";
 
 class App {
   public express: Application;

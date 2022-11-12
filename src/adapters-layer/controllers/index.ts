@@ -1,3 +1,4 @@
 import CreateMovieController from "./movie/create";
+import ListMovieController from "./movie/list";
 
-export { CreateMovieController };
+export { CreateMovieController, ListMovieController };
