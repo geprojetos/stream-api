@@ -34,7 +34,7 @@ class InMemoryMovieRepository implements ICreateMovieAdapter {
 
   private _isInvalid() {
     return {
-      statusCode: Status.code().conflict,
+      statusCode: Status.conflict(),
       message: Messages.movie().alreadyExisting,
     };
   }
@@ -44,7 +44,7 @@ class InMemoryMovieRepository implements ICreateMovieAdapter {
     this._movieList.push(movie.stream());
 
     return {
-      statusCode: Status.code().ok,
+      statusCode: Status.ok(),
       message: Messages.movie().saveInDataBase,
       stream: movie.stream(),
     };
@@ -53,7 +53,7 @@ class InMemoryMovieRepository implements ICreateMovieAdapter {
   private _error(error: unknown) {
     logger.error(error);
     return {
-      statusCode: Status.code().badRequest,
+      statusCode: Status.badRequest(),
       message: JSON.stringify(error),
     };
   }

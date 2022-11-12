@@ -42,7 +42,7 @@ class MovieRepository implements ICreateMovieAdapter {
 
   private _isInvalid() {
     return {
-      statusCode: Status.code().conflict,
+      statusCode: Status.conflict(),
       message: Messages.movie().alreadyExisting,
     };
   }
@@ -53,7 +53,7 @@ class MovieRepository implements ICreateMovieAdapter {
     this._file._saveMovieDataBase(this._movieList);
 
     return {
-      statusCode: Status.code().ok,
+      statusCode: Status.ok(),
       message: Messages.movie().saveInDataBase,
       stream: movie.stream(),
     };
@@ -62,7 +62,7 @@ class MovieRepository implements ICreateMovieAdapter {
   private _error(error: unknown) {
     logger.error(error);
     return {
-      statusCode: Status.code().badRequest,
+      statusCode: Status.badRequest(),
       message: JSON.stringify(error),
     };
   }

@@ -17,7 +17,7 @@ class CreateMovieController {
       description,
     });
     return {
-      statusCode: Status.code().created,
+      statusCode: Status.created(),
       message: Messages.movie().createSuccessfully,
       stream: result.stream,
     };

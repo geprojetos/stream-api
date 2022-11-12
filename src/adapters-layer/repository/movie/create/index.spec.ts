@@ -24,7 +24,7 @@ describe("MovieRepository", async () => {
     await inMemoryMovieRepository.create(new Stream(movieTest));
     const result = await inMemoryMovieRepository.create(new Stream(movieTest));
     expect(result).toStrictEqual({
-      statusCode: Status.code().conflict,
+      statusCode: Status.conflict(),
       message: Messages.movie().alreadyExisting,
     });
   });
