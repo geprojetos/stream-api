@@ -3,8 +3,6 @@ import {
   ICreateMovieResponse,
 } from "../../../../application-layer/useCase/movie";
 import { Request } from "../../../../app";
-import Messages from "../../../../utils/messages";
-import Status from "../../../../utils/status";
 
 class CreateMovieController {
   constructor(private _createMovieUseCase: CreateMovieUseCase) {}
@@ -17,8 +15,8 @@ class CreateMovieController {
       description,
     });
     return {
-      statusCode: Status.created(),
-      message: Messages.movie().createSuccessfully,
+      statusCode: result.statusCode,
+      message: result.message,
       stream: result.stream,
     };
   }

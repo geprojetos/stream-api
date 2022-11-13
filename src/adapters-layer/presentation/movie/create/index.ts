@@ -1,9 +1,9 @@
 import { CreateMovieController } from "../../../controllers";
-import { MovieRepository } from "../../../repository";
+import { CreateMovieRepository } from "../../../repository";
 import { CreateMovieUseCase } from "../../../../application-layer/useCase/movie";
 
-const movieRepository = new MovieRepository();
-const createMovieUseCase = new CreateMovieUseCase(movieRepository);
+const createMovieRepository = new CreateMovieRepository();
+const createMovieUseCase = new CreateMovieUseCase(createMovieRepository);
 const createMoviePresentation = new CreateMovieController(createMovieUseCase);
 
 export { createMoviePresentation };

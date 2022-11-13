@@ -1,16 +1,16 @@
 import { Stream, IStream } from "../../../../enterprise-layer/domain";
-import { MovieRepository } from "../../../../adapters-layer/repository";
+import { CreateMovieRepository } from "../../../../adapters-layer/repository";
 import { ICreateMovie, ICreateMovieResponse } from "./ICreate";
 
 class CreateMovieUseCase implements ICreateMovie {
-  private _movieRepository: MovieRepository;
+  private _createMovieRepository: CreateMovieRepository;
 
-  constructor(movieRepository: MovieRepository) {
-    this._movieRepository = movieRepository;
+  constructor(movieRepository: CreateMovieRepository) {
+    this._createMovieRepository = movieRepository;
   }
 
   async create(stream: IStream): Promise<ICreateMovieResponse> {
-    const result = await this._movieRepository.create(new Stream(stream));
+    const result = await this._createMovieRepository.create(new Stream(stream));
     return result;
   }
 }
