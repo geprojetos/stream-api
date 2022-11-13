@@ -1,6 +1,4 @@
-import { IStream, Stream } from "../../../../enterprise-layer/domain";
 import { logger } from "../../../../utils/logger";
-import { ICreateMovieResponse } from "../../../../application-layer/useCase/movie";
 import Messages from "../../../../utils/messages";
 import Status from "../../../../utils/status";
 import File from "../../../../utils/file";
@@ -8,23 +6,35 @@ import { IListMovieAdapter } from "./IListMovieAdapter";
 import { IListMovieResponse } from "../../../../application-layer/useCase/movie/list/IList";
 
 class ListRepository implements IListMovieAdapter {
-  private _movieList: IStream[];
   private _file: File;
 
   constructor() {
-    this._movieList = [];
-    this._file = new File(this._movieList);
-  }
-
-  copyListMovies() {
-    return JSON.parse(JSON.stringify(this._file.getMovies()));
+    this._file = File.getInstance();
   }
 
   async list(): Promise<IListMovieResponse> {
+    try {
+      return await this._isSuccess();
+    } catch (error) {
+      return this._isError(error);
+    }
+  }
+
+  private async _isSuccess() {
+    const result = await this._file.getCopyMovies();
+    logger.info(Messages.movie().listSuccessfully);
     return {
-      message: "",
-      statusCode: 0,
-      stream: await this.copyListMovies(),
+      message: Messages.movie().listSuccessfully,
+      statusCode: Status.ok(),
+      movies: result,
+    };
+  }
+
+  private _isError(error: unknown) {
+    logger.error(error);
+    return {
+      message: Messages.movie().movieListingError,
+      statusCode: Status.badRequest(),
     };
   }
 }

@@ -7,7 +7,7 @@ interface IListMovie {
 interface IListMovieResponse {
   statusCode: number;
   message: string;
-  stream?: IStream[];
+  movies?: IStream[];
 }
 
 export { IListMovie, IListMovieResponse };
