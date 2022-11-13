@@ -13,18 +13,32 @@ class File {
     "movie.json"
   );
   private _streamList: IStream[];
+  static instance: File | undefined;
 
-  constructor(streamList: IStream[]) {
-    this._streamList = streamList;
+  constructor() {
+    this._streamList = [];
     this._readMovieDataBase();
   }
 
-  _readMovieDataBase() {
+  static getInstance() {
+    if (this.instance) {
+      return this.instance;
+    }
+
+    this.instance = new File();
+    return this.instance;
+  }
+
+  async _readMovieDataBase() {
     readFile(this._path, (error, data) => {
       if (error) {
         throw new Error(error.message);
       }
-      this._streamList = JSON.parse(data?.toString() || "[]");
+      if (data?.toString()) {
+        this._streamList = JSON.parse(data.toString());
+        return;
+      }
+      this._streamList = [];
     });
   }
 
@@ -36,8 +50,9 @@ class File {
     });
   }
 
-  getMovies(): IStream[] {
-    return this._streamList;
+  async getCopyMovies(): Promise<IStream[]> {
+    await this._readMovieDataBase();
+    return JSON.parse(JSON.stringify(this._streamList));
   }
 }
 
