@@ -1,7 +1,7 @@
 import InMemoryCreateRepository from "../../../../__test__/repository/movie/InMemoryCreateRepository";
 import { IStream, Stream } from "../../../../enterprise-layer/domain";
-import Status from "../../../../utils/status";
-import Messages from "../../../../utils/messages";
+import Status from "../../../utils/status";
+import Messages from "../../../utils/messages";
 
 describe("MovieRepository", async () => {
   const movieTest: IStream = {

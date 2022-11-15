@@ -20,11 +20,11 @@ class InMemoryCreateRepository implements ICreateMovieAdapter {
     }
   }
 
-  private _validate(movie: Stream) {
+  private async _validate(movie: Stream) {
     if (this._isAlreadyExisting(movie)) {
       return this._isInvalid();
     }
-    return this._isValid(movie);
+    return await this._isValid(movie);
   }
 
   private _isAlreadyExisting(movie: Stream) {
@@ -39,15 +39,23 @@ class InMemoryCreateRepository implements ICreateMovieAdapter {
     };
   }
 
-  private _isValid(movie: Stream) {
-    logger.info(Messages.movie().saveInDataBase);
-    this._movieList.push(movie.stream());
+  private async _isValid(movie: Stream) {
+    const transformMovieList = await this._transformMovieList(movie);
+    this._movieList = transformMovieList;
+    logger.info(`${Messages.movie().saveInDataBase} - ${movie.stream().id}`);
 
     return {
       statusCode: Status.created(),
       message: Messages.movie().saveInDataBase,
       stream: movie.stream(),
     };
+  }
+
+  private async _transformMovieList(movie: Stream): Promise<IStream[]> {
+    const list = this._movieList;
+    list.push(movie.stream());
+    this._movieList = list;
+    return this._movieList;
   }
 
   private _error(error: unknown) {
