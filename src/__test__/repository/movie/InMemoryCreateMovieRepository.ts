@@ -1,11 +1,10 @@
 import { IStream, Stream } from "../../../enterprise-layer/domain";
-import { logger } from "../../../adapters-layer/utils/logger";
 import { ICreateMovieResponse } from "../../../application-layer/useCase/movie";
 import Messages from "../../../adapters-layer/utils/messages";
 import Status from "../../../adapters-layer/utils/status";
 import { ICreateMovieAdapter } from "../../../adapters-layer/repository/movie/create/ICreateMovieAdapter";
 
-class InMemoryCreateRepository implements ICreateMovieAdapter {
+class InMemoryCreateMovieRepository implements ICreateMovieAdapter {
   private _movieList: IStream[];
 
   constructor() {
@@ -42,7 +41,6 @@ class InMemoryCreateRepository implements ICreateMovieAdapter {
   private async _isValid(movie: Stream) {
     const transformMovieList = await this._transformMovieList(movie);
     this._movieList = transformMovieList;
-    logger.info(`${Messages.movie().saveInDataBase} - ${movie.stream().id}`);
 
     return {
       statusCode: Status.created(),
@@ -59,7 +57,6 @@ class InMemoryCreateRepository implements ICreateMovieAdapter {
   }
 
   private _error(error: unknown) {
-    logger.error(error);
     return {
       statusCode: Status.badRequest(),
       message: JSON.stringify(error),
@@ -67,4 +64,4 @@ class InMemoryCreateRepository implements ICreateMovieAdapter {
   }
 }
 
-export default InMemoryCreateRepository;
+export default InMemoryCreateMovieRepository;

@@ -1,4 +1,4 @@
-import InMemoryCreateRepository from "../../../../__test__/repository/movie/InMemoryCreateRepository";
+import InMemoryCreateMovieRepository from "../../../../__test__/repository/movie/InMemoryCreateMovieRepository";
 import { IStream, Stream } from "../../../../enterprise-layer/domain";
 import Status from "../../../utils/status";
 import Messages from "../../../utils/messages";
@@ -9,20 +9,24 @@ describe("MovieRepository", async () => {
     category: "test",
     description: "test",
   };
-  let inMemoryMovieRepository: InMemoryCreateRepository;
+  let inMemoryCreateMovieRepository: InMemoryCreateMovieRepository;
 
   beforeAll(() => {
-    inMemoryMovieRepository = new InMemoryCreateRepository();
+    inMemoryCreateMovieRepository = new InMemoryCreateMovieRepository();
   });
 
   test("should be able create movie with status code 201", async () => {
-    const result = await inMemoryMovieRepository.create(new Stream(movieTest));
+    const result = await inMemoryCreateMovieRepository.create(
+      new Stream(movieTest)
+    );
     expect(result.statusCode).toBe(Status.created());
   });
 
   test("should be able error create movie with status code 409", async () => {
-    await inMemoryMovieRepository.create(new Stream(movieTest));
-    const result = await inMemoryMovieRepository.create(new Stream(movieTest));
+    await inMemoryCreateMovieRepository.create(new Stream(movieTest));
+    const result = await inMemoryCreateMovieRepository.create(
+      new Stream(movieTest)
+    );
     expect(result).toStrictEqual({
       statusCode: Status.conflict(),
       message: Messages.movie().alreadyExisting,
