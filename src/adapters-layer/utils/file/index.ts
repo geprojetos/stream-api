@@ -8,6 +8,7 @@ class File {
     __dirname,
     "..",
     "..",
+    "..",
     "frameworks-layer",
     "database",
     "movie.json"
