@@ -2,7 +2,7 @@ import {
   CreateMovieUseCase,
   ICreateMovieResponse,
 } from "../../../../application-layer/useCase/movie";
-import { Request } from "../../../../app";
+import { Request } from "../../../../frameworks-layer/app";
 
 class CreateMovieController {
   constructor(private _createMovieUseCase: CreateMovieUseCase) {}

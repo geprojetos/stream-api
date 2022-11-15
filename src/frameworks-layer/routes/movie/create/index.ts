@@ -1,4 +1,4 @@
-import { Application } from "../../../../app";
+import { Application } from "../../../app";
 import { createMoviePresentation } from "../../../../adapters-layer/presentation/";
 
 class MovieRoutes {

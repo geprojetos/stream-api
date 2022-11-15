@@ -1,4 +1,4 @@
-import { Application } from "../../../app";
+import { Application } from "../../app";
 import CreateMovieRoute from "./create";
 import ListMovieRoute from "./list";
 

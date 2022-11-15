@@ -1,7 +1,7 @@
-import { logger } from "../../../../utils/logger";
-import Messages from "../../../../utils/messages";
-import Status from "../../../../utils/status";
-import File from "../../../../utils/file";
+import { logger } from "../../../utils/logger";
+import Messages from "../../../utils/messages";
+import Status from "../../../utils/status";
+import File from "../../../utils/file";
 import { IListMovieAdapter } from "./IListMovieAdapter";
 import { IListMovieResponse } from "../../../../application-layer/useCase/movie/list/IList";
 

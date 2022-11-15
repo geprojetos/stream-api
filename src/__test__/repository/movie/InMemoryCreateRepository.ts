@@ -1,8 +1,8 @@
 import { IStream, Stream } from "../../../enterprise-layer/domain";
-import { logger } from "../../../utils/logger";
+import { logger } from "../../../adapters-layer/utils/logger";
 import { ICreateMovieResponse } from "../../../application-layer/useCase/movie";
-import Messages from "../../../utils/messages";
-import Status from "../../../utils/status";
+import Messages from "../../../adapters-layer/utils/messages";
+import Status from "../../../adapters-layer/utils/status";
 import { ICreateMovieAdapter } from "../../../adapters-layer/repository/movie/create/ICreateMovieAdapter";
 
 class InMemoryCreateRepository implements ICreateMovieAdapter {

@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "fs";
 import { join } from "path";
-import { IStream } from "../../enterprise-layer/domain";
+import { IStream } from "../../../enterprise-layer/domain";
 import Messages from "../messages";
 
 class File {

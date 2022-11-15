@@ -1,5 +1,5 @@
-import { Application } from "../../../app";
-import { logger } from "../../../utils/logger";
+import { Application } from "../../app";
+import { logger } from "../../../adapters-layer/utils/logger";
 
 class DashboardRoutes {
   private express: Application;

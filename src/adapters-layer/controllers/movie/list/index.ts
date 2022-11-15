@@ -2,7 +2,7 @@ import {
   IListMovieResponse,
   ListMovieUseCase,
 } from "../../../../application-layer/useCase/movie";
-import { Request } from "../../../../app";
+import { Request } from "../../../../frameworks-layer/app";
 
 class ListMovieController {
   constructor(private _createMovieUseCase: ListMovieUseCase) {}

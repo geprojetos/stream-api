@@ -1,9 +1,9 @@
 import { IStream, Stream } from "../../../../enterprise-layer/domain";
-import { logger } from "../../../../utils/logger";
+import { logger } from "../../../utils/logger";
 import { ICreateMovieResponse } from "../../../../application-layer/useCase/movie";
-import Messages from "../../../../utils/messages";
-import Status from "../../../../utils/status";
-import File from "../../../../utils/file";
+import Messages from "../../../utils/messages";
+import Status from "../../../utils/status";
+import File from "../../../utils/file";
 import { ICreateMovieAdapter } from "./ICreateMovieAdapter";
 
 class CreateMovieRepository implements ICreateMovieAdapter {
