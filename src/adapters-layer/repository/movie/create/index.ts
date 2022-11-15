@@ -10,9 +10,9 @@ class CreateMovieRepository implements ICreateMovieAdapter {
   private _movieList: IStream[];
   private _file: File;
 
-  constructor() {
+  constructor(isDataBaseTest?: boolean) {
     this._movieList = [];
-    this._file = File.getInstance();
+    this._file = File.getInstance(isDataBaseTest);
     this._initialize();
   }
 
