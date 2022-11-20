@@ -53,7 +53,7 @@ class CreateMovieRepository implements ICreateMovieAdapter {
 
   private async _isValid(movie: Stream) {
     const transformMovieList = await this._transformMovieList(movie);
-    this._file._saveMovieDataBase(transformMovieList);
+    this._file.saveMovieDataBase(transformMovieList);
     logger.info(`${Messages.movie().saveInDataBase} - ${movie.stream().id}`);
 
     return {

@@ -46,7 +46,7 @@ class File {
     );
   }
 
-  static getInstance(isDataBaseTest?: boolean) {
+  public static getInstance(isDataBaseTest?: boolean) {
     if (this.instance) {
       return this.instance;
     }
@@ -55,7 +55,7 @@ class File {
     return this.instance;
   }
 
-  async _readMovieDataBase() {
+  private async _readMovieDataBase() {
     if (this._path) {
       readFile(this._path, (error, data) => {
         if (error) {
@@ -71,7 +71,7 @@ class File {
     }
   }
 
-  _saveMovieDataBase(stream: IStream[]) {
+  public saveMovieDataBase(stream: IStream[]) {
     if (this._path) {
       writeFile(this._path, JSON.stringify(stream), (error) => {
         if (error) {
@@ -81,9 +81,9 @@ class File {
     }
   }
 
-  async clearAllMoviesDataBase() {
+  public async clearAllMoviesDataBase() {
     if (this._path) {
-      writeFile(this._path, JSON.stringify([]), (error) => {
+      writeFile(this._path, JSON.stringify([""]), (error) => {
         if (error) {
           throw new Error(Messages.movie().errorSaveInDataBase);
         }
