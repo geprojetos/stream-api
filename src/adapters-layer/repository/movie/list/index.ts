@@ -21,7 +21,7 @@ class ListRepository implements IListMovieAdapter {
   }
 
   private async _isSuccess() {
-    const result = await this._file.getCopyMovies();
+    const result = await this._file.read();
     logger.info(Messages.movie().listSuccessfully);
     return {
       message: Messages.movie().listSuccessfully,

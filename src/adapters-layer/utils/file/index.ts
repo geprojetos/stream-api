@@ -1,24 +1,17 @@
-import { readFile, writeFile } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 import { IStream } from "../../../enterprise-layer/domain";
 import { logger } from "../logger";
-import Messages from "../messages";
+import Status from "../status";
 
 class File {
   private _path?: string;
   private _isDataBaseTest?: boolean;
-  private _streamList: IStream[];
   static instance: File | undefined;
 
   constructor(isDataBaseTest?: boolean) {
-    this._streamList = [];
     this._isDataBaseTest = isDataBaseTest;
-    this._initialize();
-  }
-
-  private _initialize() {
     this._selectDataBase();
-    this._readMovieDataBase();
   }
 
   private _selectDataBase() {
@@ -46,6 +39,51 @@ class File {
     );
   }
 
+  async read() {
+    try {
+      if (this._path) {
+        const fileContent = await readFileSync(this._path, {
+          encoding: "utf8",
+        });
+        return JSON.parse(fileContent.toString());
+      }
+    } catch (error: unknown) {
+      logger.error(`error readFileSync, ${error}`);
+    }
+  }
+
+  async write(stream: IStream[]) {
+    try {
+      if (this._path) {
+        await writeFileSync(this._path, JSON.stringify(stream));
+        return {
+          statusCode: Status.created(),
+        };
+      }
+    } catch (error) {
+      logger.error(`error writeFileSync, ${error}`);
+      return {
+        statusCode: Status.badRequest(),
+      };
+    }
+  }
+
+  async delete() {
+    try {
+      if (this._path) {
+        await writeFileSync(this._path, "[]");
+        return {
+          statusCode: Status.ok(),
+        };
+      }
+    } catch (error) {
+      logger.error(`error delete writeFileSync, ${error}`);
+      return {
+        statusCode: Status.badRequest(),
+      };
+    }
+  }
+
   public static getInstance(isDataBaseTest?: boolean) {
     if (this.instance) {
       return this.instance;
@@ -53,47 +91,6 @@ class File {
 
     this.instance = new File(isDataBaseTest);
     return this.instance;
-  }
-
-  private async _readMovieDataBase() {
-    if (this._path) {
-      readFile(this._path, (error, data) => {
-        if (error) {
-          logger.error(error.message);
-          throw new Error(error.message);
-        }
-        if (data?.toString()) {
-          this._streamList = JSON.parse(data.toString());
-          return;
-        }
-        this._streamList = [];
-      });
-    }
-  }
-
-  public saveMovieDataBase(stream: IStream[]) {
-    if (this._path) {
-      writeFile(this._path, JSON.stringify(stream), (error) => {
-        if (error) {
-          throw new Error(Messages.movie().errorSaveInDataBase);
-        }
-      });
-    }
-  }
-
-  public async clearAllMoviesDataBase() {
-    if (this._path) {
-      writeFile(this._path, JSON.stringify([""]), (error) => {
-        if (error) {
-          throw new Error(Messages.movie().errorSaveInDataBase);
-        }
-      });
-    }
-  }
-
-  async getCopyMovies(): Promise<IStream[]> {
-    await this._readMovieDataBase();
-    return JSON.parse(JSON.stringify(this._streamList));
   }
 }
 

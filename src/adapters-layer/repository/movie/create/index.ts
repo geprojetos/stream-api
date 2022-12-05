@@ -6,26 +6,26 @@ import Status from "../../../utils/status";
 import File from "../../../utils/file";
 import { ICreateMovieAdapter } from "./ICreateMovieAdapter";
 
+interface AlreadyMovie {
+  movie: Stream;
+  contentFile?: IStream[];
+  isAlready?: IStream[];
+}
+
 class CreateMovieRepository implements ICreateMovieAdapter {
-  private _movieList: IStream[];
   private _file: File;
+  private _status: ICreateMovieResponse;
 
   constructor(isDataBaseTest?: boolean) {
-    this._movieList = [];
     this._file = File.getInstance(isDataBaseTest);
-    this._initialize();
-  }
-
-  private async _initialize() {
-    const result = await this._file.getCopyMovies();
-    if (result) {
-      this._movieList = result;
-    }
+    this._status = {
+      message: "",
+      statusCode: 0,
+    };
   }
 
   public async create(movie: Stream): Promise<ICreateMovieResponse> {
     try {
-      await this._initialize();
       return this._validate(movie);
     } catch (error) {
       return this._error(error);
@@ -33,45 +33,46 @@ class CreateMovieRepository implements ICreateMovieAdapter {
   }
 
   private async _validate(movie: Stream) {
-    if (this._isAlreadyExisting(movie)) {
-      return this._isInvalid();
+    const contentFile: IStream[] = await this._file.read();
+    const isAlready = this._isAlready({ contentFile, movie });
+    await this.isError({ isAlready, movie });
+    await this._isSuccess({ isAlready, movie, contentFile });
+    return this._status;
+  }
+
+  private _isAlready(alreadyMovie: AlreadyMovie) {
+    return alreadyMovie.contentFile?.filter(
+      (content) => content.title === alreadyMovie.movie?.stream().title
+    );
+  }
+
+  async isError(alreadyMovie: AlreadyMovie) {
+    if (alreadyMovie.isAlready?.length) {
+      this._status = {
+        statusCode: Status.conflict(),
+        message: Messages.movie().alreadyExisting,
+        stream: alreadyMovie.movie?.stream(),
+      };
     }
-    return await this._isValid(movie);
   }
 
-  private _isAlreadyExisting(movie: Stream) {
-    const { title } = movie.stream();
-    return this._movieList.some((movie) => movie.title === title);
-  }
+  private async _isSuccess(alreadyMovie: AlreadyMovie) {
+    if (!alreadyMovie.isAlready?.length) {
+      alreadyMovie.contentFile?.push(alreadyMovie.movie.stream());
+      const isCreatedStatus = await this._file.write(
+        alreadyMovie?.contentFile || []
+      );
 
-  private _isInvalid() {
-    return {
-      statusCode: Status.conflict(),
-      message: Messages.movie().alreadyExisting,
-    };
-  }
-
-  private async _isValid(movie: Stream) {
-    const transformMovieList = await this._transformMovieList(movie);
-    this._file.saveMovieDataBase(transformMovieList);
-    logger.info(`${Messages.movie().saveInDataBase} - ${movie.stream().id}`);
-
-    return {
-      statusCode: Status.created(),
-      message: Messages.movie().saveInDataBase,
-      stream: movie.stream(),
-    };
-  }
-
-  private async _transformMovieList(movie: Stream): Promise<IStream[]> {
-    const list = await this._file.getCopyMovies();
-    list.push(movie.stream());
-    this._movieList = list;
-    return this._movieList;
+      this._status = {
+        statusCode: isCreatedStatus?.statusCode || Status.badRequest(),
+        message: Messages.movie().saveInDataBase,
+        stream: alreadyMovie.movie.stream(),
+      };
+    }
   }
 
   private _error(error: unknown) {
-    logger.error(error);
+    logger.error(`error create repository movie => ${error}`);
     return {
       statusCode: Status.badRequest(),
       message: JSON.stringify(error),
