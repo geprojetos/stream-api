@@ -35,7 +35,7 @@ class CreateMovieRepository implements ICreateMovieAdapter {
   private async _validate(movie: Stream) {
     const contentFile: IStream[] = await this._file.read();
     const isAlready = this._isAlready({ contentFile, movie });
-    await this.isError({ isAlready, movie });
+    await this._isError({ isAlready, movie });
     await this._isSuccess({ isAlready, movie, contentFile });
     return this._status;
   }
@@ -46,28 +46,33 @@ class CreateMovieRepository implements ICreateMovieAdapter {
     );
   }
 
-  async isError(alreadyMovie: AlreadyMovie) {
+  private async _isError(alreadyMovie: AlreadyMovie) {
     if (alreadyMovie.isAlready?.length) {
       this._status = {
         statusCode: Status.conflict(),
         message: Messages.movie().alreadyExisting,
         stream: alreadyMovie.movie?.stream(),
       };
+      logger.warn(
+        `${Messages.movie().alreadyExisting} -> ${alreadyMovie.isAlready[0].id}`
+      );
     }
   }
 
   private async _isSuccess(alreadyMovie: AlreadyMovie) {
     if (!alreadyMovie.isAlready?.length) {
       alreadyMovie.contentFile?.push(alreadyMovie.movie.stream());
-      const isCreatedStatus = await this._file.write(
-        alreadyMovie?.contentFile || []
-      );
-
+      const response = await this._file.write(alreadyMovie?.contentFile || []);
       this._status = {
-        statusCode: isCreatedStatus?.statusCode || Status.badRequest(),
+        statusCode: response?.statusCode || Status.badRequest(),
         message: Messages.movie().saveInDataBase,
         stream: alreadyMovie.movie.stream(),
       };
+      logger.info(
+        `${Messages.movie().saveInDataBase} => ${
+          alreadyMovie.movie.stream().id
+        }`
+      );
     }
   }
 
