@@ -4,12 +4,13 @@ import Status from "../../../utils/status";
 import File from "../../../utils/file";
 import { IListMovieAdapter } from "./IListMovieAdapter";
 import { IListMovieResponse } from "../../../../application-layer/useCase/movie/list/IList";
+import { IConfig } from "../../../utils/config";
 
 class ListRepository implements IListMovieAdapter {
   private _file: File;
 
-  constructor() {
-    this._file = File.getInstance();
+  constructor(config?: IConfig) {
+    this._file = File.getInstance(config);
   }
 
   async list(): Promise<IListMovieResponse> {

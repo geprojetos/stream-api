@@ -5,6 +5,7 @@ import Messages from "../../../utils/messages";
 import Status from "../../../utils/status";
 import File from "../../../utils/file";
 import { ICreateMovieAdapter } from "./ICreateMovieAdapter";
+import { IConfig } from "../../../utils/config";
 
 interface AlreadyMovie {
   movie: Stream;
@@ -16,8 +17,8 @@ class CreateMovieRepository implements ICreateMovieAdapter {
   private _file: File;
   private _status: ICreateMovieResponse;
 
-  constructor(isDataBaseTest?: boolean) {
-    this._file = File.getInstance(isDataBaseTest);
+  constructor(config?: IConfig) {
+    this._file = File.getInstance(config);
     this._status = {
       message: "",
       statusCode: 0,

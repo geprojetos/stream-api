@@ -3,6 +3,7 @@ import ListRepository from "./index";
 import { IStream, Stream } from "../../../../enterprise-layer/domain";
 import Status from "../../../utils/status";
 import File from "../../../utils/file";
+import { config } from "../../../utils/config";
 
 describe("InMemoryListMovieRepository", async () => {
   const movieTest: IStream = {
@@ -15,9 +16,9 @@ describe("InMemoryListMovieRepository", async () => {
   let file: File;
 
   beforeAll(() => {
-    createMovieRepository = new CreateMovieRepository(true);
-    listRepository = new ListRepository();
-    file = File.getInstance(true);
+    createMovieRepository = new CreateMovieRepository(config);
+    listRepository = new ListRepository(config);
+    file = File.getInstance(config);
   });
 
   afterAll(() => {

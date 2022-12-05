@@ -2,6 +2,7 @@ import CreateMovieRepository from "./index";
 import { IStream, Stream } from "../../../../enterprise-layer/domain";
 import Status from "../../../utils/status";
 import File from "../../../utils/file";
+import { config } from "../../../utils/config";
 
 describe("MovieRepository", async () => {
   const movieTest: IStream = {
@@ -18,8 +19,8 @@ describe("MovieRepository", async () => {
   let file: File;
 
   beforeAll(() => {
-    createMovieRepository = new CreateMovieRepository(true);
-    file = File.getInstance(true);
+    createMovieRepository = new CreateMovieRepository(config);
+    file = File.getInstance(config);
   });
 
   afterAll(() => {

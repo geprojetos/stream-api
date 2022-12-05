@@ -1,42 +1,25 @@
 import { readFileSync, writeFileSync } from "fs";
-import { join } from "path";
 import { IStream } from "../../../enterprise-layer/domain";
+import { config, IConfig } from "../config";
 import { logger } from "../logger";
 import Status from "../status";
 
 class File {
   private _path?: string;
-  private _isDataBaseTest?: boolean;
+  private _isConfig?: IConfig;
   static instance: File | undefined;
 
-  constructor(isDataBaseTest?: boolean) {
-    this._isDataBaseTest = isDataBaseTest;
+  constructor(config?: IConfig) {
+    this._isConfig = config;
     this._selectDataBase();
   }
 
   private _selectDataBase() {
-    if (this._isDataBaseTest) {
-      this._path = join(
-        __dirname,
-        "..",
-        "..",
-        "..",
-        "frameworks-layer",
-        "database",
-        "movie-test.json"
-      );
+    if (this._isConfig) {
+      this._path = this._isConfig.fullPathTest;
       return;
     }
-
-    this._path = join(
-      __dirname,
-      "..",
-      "..",
-      "..",
-      "frameworks-layer",
-      "database",
-      "movie.json"
-    );
+    this._path = config.fullPath;
   }
 
   async read() {
@@ -84,12 +67,12 @@ class File {
     }
   }
 
-  public static getInstance(isDataBaseTest?: boolean) {
+  public static getInstance(config?: IConfig) {
     if (this.instance) {
       return this.instance;
     }
 
-    this.instance = new File(isDataBaseTest);
+    this.instance = new File(config);
     return this.instance;
   }
 }
