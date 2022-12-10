@@ -4,16 +4,16 @@ import Status from "../../../utils/status";
 import File from "../../../utils/file";
 import { config } from "../../../utils/config";
 
-describe("MovieRepository", async () => {
+describe("CreateMovieRepository", async () => {
   const movieTest: IStream = {
-    title: "test",
-    category: "test",
-    description: "test",
+    title: "testCreateMovie",
+    category: "testCreateMovie",
+    description: "testCreateMovie",
   };
   const movieSecondTest: IStream = {
-    title: "test2",
-    category: "test2",
-    description: "test2",
+    title: "testCreateMovie2",
+    category: "testCreateMovie2",
+    description: "testCreateMovie2",
   };
   let createMovieRepository: CreateMovieRepository;
   let file: File;

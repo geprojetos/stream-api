@@ -5,11 +5,11 @@ import Status from "../../../utils/status";
 import File from "../../../utils/file";
 import { config } from "../../../utils/config";
 
-describe("InMemoryListMovieRepository", async () => {
+describe("ListRepository", async () => {
   const movieTest: IStream = {
-    title: "test",
-    category: "test",
-    description: "test",
+    title: "testList",
+    category: "testList",
+    description: "testList",
   };
   let createMovieRepository: CreateMovieRepository;
   let listRepository: ListRepository;
@@ -35,7 +35,7 @@ describe("InMemoryListMovieRepository", async () => {
       new Stream(movieTest)
     );
     const { movies } = await listRepository.list();
-    const result = movies && movies[0];
+    const result = movies?.find((movie) => movie.id === stream?.id);
     expect(result).toStrictEqual(stream);
   });
 });
