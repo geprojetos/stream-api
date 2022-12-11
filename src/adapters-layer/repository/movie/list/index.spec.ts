@@ -15,14 +15,15 @@ describe("ListRepository", async () => {
   let listRepository: ListRepository;
   let file: File;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     createMovieRepository = new CreateMovieRepository(config);
     listRepository = new ListRepository(config);
     file = File.getInstance(config);
+    await file.read();
   });
 
-  afterAll(() => {
-    file.delete();
+  afterAll(async () => {
+    await file.delete();
   });
 
   test("should be able list movie with status code 200", async () => {

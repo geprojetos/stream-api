@@ -23,11 +23,10 @@ class ListRepository implements IListMovieAdapter {
 
   private async _isSuccess() {
     const result = await this._file.read();
-    logger.info(Messages.movie().listSuccessfully);
     return {
       message: Messages.movie().listSuccessfully,
       statusCode: Status.ok(),
-      movies: result,
+      movies: result || [],
     };
   }
 

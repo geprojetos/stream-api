@@ -23,8 +23,8 @@ describe("CreateMovieRepository", async () => {
     file = File.getInstance(config);
   });
 
-  afterAll(() => {
-    file.delete();
+  afterAll(async () => {
+    await file.delete();
   });
 
   test("should be able create movie with status code 201", async () => {
