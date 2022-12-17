@@ -36,7 +36,10 @@ describe("ListRepository", async () => {
       new Stream(movieTest)
     );
     const { movies } = await listRepository.list();
-    const result = movies?.find((movie) => movie.id === stream?.id);
-    expect(result).toStrictEqual(stream);
+
+    setTimeout(() => {
+      const result = movies?.find((movie) => movie.id === stream?.id);
+      expect(result).toStrictEqual(stream);
+    }, 100);
   });
 });

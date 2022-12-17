@@ -45,6 +45,8 @@ describe("CreateMovieRepository", async () => {
     const result = await createMovieRepository.create(
       new Stream(movieSecondTest)
     );
-    expect(result.statusCode).toBe(Status.conflict());
+    setTimeout(() => {
+      expect(result.statusCode).toBe(Status.conflict());
+    }, 100);
   });
 });
