@@ -1,5 +1,6 @@
 import { Application } from "../../app";
 import CreateMovieRoute from "./create";
+import Edit from "./edit";
 import ListMovieRoute from "./list";
 
 class MovieRoutes {
@@ -14,6 +15,7 @@ class MovieRoutes {
   routes() {
     new CreateMovieRoute(this._express, this._baseUrl);
     new ListMovieRoute(this._express, this._baseUrl);
+    new Edit(this._express, this._baseUrl);
   }
 }
 
