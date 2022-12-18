@@ -1,7 +1,8 @@
 import { IListMovieResponse } from "../../../../../application-layer/useCase/movie/list/IList";
+import { IStream } from "../../../../../enterprise-layer/domain";
 
 interface IEdit {
-  edit: () => Promise<IListMovieResponse>;
+  edit: (movie: IStream) => Promise<IListMovieResponse>;
 }
 
 export { IEdit };

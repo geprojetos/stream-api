@@ -1,5 +1,6 @@
 import { EditRepository } from "../../../../adapters-layer/repository";
 import { IEditMovie, IEditMovieResponse } from "./IEdit";
+import { IStream } from "../../../../enterprise-layer/domain";
 
 class EditMovieUseCase implements IEditMovie {
   private _editRepository: EditRepository;
@@ -8,8 +9,8 @@ class EditMovieUseCase implements IEditMovie {
     this._editRepository = editRepository;
   }
 
-  async list(): Promise<IEditMovieResponse> {
-    const result = await this._editRepository.edit();
+  async edit(movie: IStream): Promise<IEditMovieResponse> {
+    const result = await this._editRepository.edit(movie);
     return result;
   }
 }

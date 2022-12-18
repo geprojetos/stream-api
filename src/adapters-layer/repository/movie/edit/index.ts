@@ -4,6 +4,7 @@ import { IConfig } from "../../../utils/config";
 import Success from "./utils/Success";
 import Error from "./utils/Error";
 import { IEditMovieResponse } from "../../../../application-layer/useCase/movie";
+import { IStream } from "../../../../enterprise-layer/domain";
 
 class EditRepository implements IEdit {
   private _file: File;
@@ -14,9 +15,9 @@ class EditRepository implements IEdit {
     this._success = new Success(this._file);
   }
 
-  async edit(): Promise<IEditMovieResponse> {
+  async edit(movie: IStream): Promise<IEditMovieResponse> {
     try {
-      return await this._success.success();
+      return await this._success.success(movie);
     } catch (error) {
       return Error.error(error);
     }

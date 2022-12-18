@@ -2,6 +2,7 @@ import { IEditMovieResponse } from "../../../../../application-layer/useCase/mov
 import File from "../../../../utils/file";
 import Messages from "../../../../utils/messages";
 import Status from "../../../../utils/status";
+import { IStream } from "../../../../../enterprise-layer/domain";
 
 class Success {
   private _file: File;
@@ -10,19 +11,18 @@ class Success {
     this._file = file;
   }
 
-  public async success(): Promise<IEditMovieResponse> {
-    const result = await this._file.read();
+  public async success(movie: IStream): Promise<IEditMovieResponse> {
+    const { id } = movie;
+    const movies: IStream[] = await this._file.read();
+    const isFind = movies?.find((movie) => movie.id === id);
     return {
       message: Messages.movie().listSuccessfully,
       statusCode: Status.ok(),
-      movies: [
-        {
-          title: "edit",
-          category: "edit",
-          description: "edit",
-        },
-      ],
-      // movies: result || [],
+      movie: {
+        title: "edit",
+        category: "edit",
+        description: "edit",
+      },
     };
   }
 }
