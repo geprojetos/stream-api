@@ -12,7 +12,6 @@ class File {
   constructor(config?: IConfig) {
     this._isConfig = config;
     this._selectDataBase();
-    this.read();
   }
 
   private _selectDataBase() {

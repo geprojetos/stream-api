@@ -42,19 +42,19 @@ class CreateMovieRepository implements ICreateMovieAdapter {
 
   private async _validate(movie: Stream) {
     const contentFile: IStream[] = await this._file.read();
-    const isAlready = Utils.isDuplicated({
-      contentFile,
+
+    const isValid = Utils.isValid({
       movie,
     });
+    if (isValid) return isValid;
 
     const isAlreadyExisting = Utils.isAlreadyExisting({
-      isAlready,
       movie,
+      contentFile,
     });
-
     if (isAlreadyExisting) return isAlreadyExisting;
 
-    return this._success.isSuccess({ isAlready, movie, contentFile });
+    return this._success.isSuccess({ movie, contentFile });
   }
 }
 

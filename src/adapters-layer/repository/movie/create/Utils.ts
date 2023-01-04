@@ -4,6 +4,22 @@ import Messages from "../../../utils/messages";
 import Status from "../../../utils/status";
 
 class Utils {
+  static isValid(props: ValidateProps) {
+    const { movie } = props;
+
+    if (
+      !movie.stream().title ||
+      !movie.stream().category ||
+      !movie.stream().description
+    ) {
+      logger.error(`${Messages.movie().invalidData}`);
+      return {
+        statusCode: Status.badRequest(),
+        message: Messages.movie().invalidData,
+      };
+    }
+  }
+
   static isDuplicated(props: ValidateProps) {
     const { contentFile, movie } = props;
 
@@ -13,7 +29,11 @@ class Utils {
   }
 
   static isAlreadyExisting(props: ValidateProps) {
-    const { isAlready, movie } = props;
+    const { movie, contentFile } = props;
+    const isAlready = this.isDuplicated({
+      contentFile,
+      movie,
+    });
 
     if (isAlready?.length) {
       logger.warn(`${Messages.movie().alreadyExisting} -> ${isAlready[0].id}`);

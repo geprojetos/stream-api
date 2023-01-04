@@ -3,6 +3,7 @@ import File from "../../../utils/file";
 import { logger } from "../../../utils/logger";
 import Messages from "../../../utils/messages";
 import Status from "../../../utils/status";
+import Utils from "./Utils";
 
 class Success {
   private _file: File;
@@ -12,7 +13,11 @@ class Success {
   }
 
   public async isSuccess(props: ValidateProps) {
-    const { isAlready, movie, contentFile } = props;
+    const { movie, contentFile } = props;
+    const isAlready = Utils.isDuplicated({
+      contentFile,
+      movie,
+    });
 
     if (!isAlready?.length) {
       contentFile?.push(movie.stream());

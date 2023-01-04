@@ -15,6 +15,11 @@ describe("CreateMovieRepository", async () => {
     category: "testCreateMovie2",
     description: "testCreateMovie2",
   };
+  const movieThirdTest: IStream = {
+    title: "",
+    category: "",
+    description: "",
+  };
   let createMovieRepository: CreateMovieRepository;
   let file: File;
 
@@ -48,5 +53,12 @@ describe("CreateMovieRepository", async () => {
     setTimeout(() => {
       expect(result.statusCode).toBe(Status.conflict());
     }, 100);
+  });
+
+  test("should be able not create movie with status 400", async () => {
+    const result = await createMovieRepository.create(
+      new Stream(movieThirdTest)
+    );
+    expect(result.statusCode).toBe(Status.badRequest());
   });
 });
