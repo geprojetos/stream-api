@@ -1,6 +1,6 @@
-import File from "../../../utils/file";
-import Messages from "../../../utils/messages";
-import Status from "../../../utils/status";
+import File from "../../../../utils/file";
+import Messages from "../../../../utils/messages";
+import Status from "../../../../utils/status";
 
 class Success {
   private _file: File;
