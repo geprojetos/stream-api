@@ -8,7 +8,8 @@ class Messages {
       listSuccessfully: "Movie listed successfully",
       movieListingError: "Movie listing error",
       errorCreateMovie: "Error create movie repository",
-      invalidData: "Invalid data",
+      invalidData:
+        "Invalid data, is required 'title', 'description', 'category'",
     };
   }
 }
