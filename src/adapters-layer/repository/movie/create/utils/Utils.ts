@@ -1,7 +1,7 @@
-import { ValidateProps } from ".";
-import { logger } from "../../../utils/logger";
-import Messages from "../../../utils/messages";
-import Status from "../../../utils/status";
+import { ValidateProps } from "..";
+import { logger } from "../../../../utils/logger";
+import Messages from "../../../../utils/messages";
+import Status from "../../../../utils/status";
 
 class Utils {
   static isValid(props: ValidateProps) {

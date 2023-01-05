@@ -1,14 +1,11 @@
 import { IStream, Stream } from "../../../../enterprise-layer/domain";
-import { logger } from "../../../utils/logger";
 import { ICreateMovieResponse } from "../../../../application-layer/useCase/movie";
-import Messages from "../../../utils/messages";
-import Status from "../../../utils/status";
 import File from "../../../utils/file";
-import { ICreateMovieAdapter } from "./ICreateMovieAdapter";
+import { ICreateMovieAdapter } from "./interface/ICreateMovieAdapter";
 import { IConfig } from "../../../utils/config";
-import Utils from "./Utils";
-import Success from "./Success";
-import Error from "./Error";
+import Utils from "./utils/Utils";
+import Success from "./utils/Success";
+import Error from "./utils/Error";
 
 interface ValidateProps {
   movie: Stream;

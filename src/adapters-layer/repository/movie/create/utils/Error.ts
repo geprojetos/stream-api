@@ -1,6 +1,6 @@
-import { logger } from "../../../utils/logger";
-import Messages from "../../../utils/messages";
-import Status from "../../../utils/status";
+import { logger } from "../../../../utils/logger";
+import Messages from "../../../../utils/messages";
+import Status from "../../../../utils/status";
 
 class Error {
   static error(error: unknown) {
