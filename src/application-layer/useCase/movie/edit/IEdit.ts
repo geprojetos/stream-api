@@ -7,7 +7,7 @@ interface IEditMovie {
 interface IEditMovieResponse {
   statusCode: number;
   message: string;
-  movie?: IStream;
+  id?: string;
 }
 
 export { IEditMovie, IEditMovieResponse };

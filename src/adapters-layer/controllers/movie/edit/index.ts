@@ -19,7 +19,7 @@ class EditMovieController {
     return {
       statusCode: result.statusCode,
       message: result.message,
-      movie: result.movie,
+      id: result.id,
     };
   }
 }
