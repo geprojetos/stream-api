@@ -5,8 +5,7 @@ import Success from "./utils/Success";
 import Error from "./utils/Error";
 import { IEditMovieResponse } from "../../../../application-layer/useCase/movie";
 import { IStream } from "../../../../enterprise-layer/domain";
-import Messages from "../../../utils/messages";
-import Status from "../../../utils/status";
+import Utils from "./utils/Utils";
 
 class EditRepository implements IEdit {
   private _file: File;
@@ -25,22 +24,17 @@ class EditRepository implements IEdit {
     }
   }
 
-  private async _validate(movie: IStream) {
-    if (!movie?.id) {
-      return {
-        statusCode: Status.badRequest(),
-        message: Messages.movie().notIdToEdit,
-      };
-    }
+  private async _validate(movie: IStream): Promise<IEditMovieResponse> {
+    try {
+      const isInvalidId = Utils.isInvalidId(movie);
+      if (isInvalidId) return isInvalidId;
 
-    if (movie.title || movie.category || movie.description) {
-      return await this._success.success(movie);
-    }
+      if (Utils.isValidData(movie)) return await this._success.success(movie);
 
-    return {
-      statusCode: Status.badRequest(),
-      message: Messages.movie().notDataToEdit,
-    };
+      return Utils.isInValidData();
+    } catch (error) {
+      return Error.error(error);
+    }
   }
 }
 

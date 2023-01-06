@@ -4,7 +4,7 @@ import Status from "../../../../utils/status";
 
 class Error {
   static error(error: unknown) {
-    logger.error(`${Messages.movie().movieListingError} => ${error}`);
+    logger.error(`${Messages.movie().editError} => ${error}`);
     return {
       statusCode: Status.badRequest(),
       message: JSON.stringify(error),

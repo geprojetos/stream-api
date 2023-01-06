@@ -7,6 +7,7 @@ class Messages {
       alreadyExisting: "Movie already existing",
       listSuccessfully: "Movie listed successfully",
       editSuccessfully: "Movie edited successfully",
+      editError: "Movie edited error",
       movieListingError: "Movie listing error",
       errorCreateMovie: "Error create movie repository",
       notFind: "Not find",
