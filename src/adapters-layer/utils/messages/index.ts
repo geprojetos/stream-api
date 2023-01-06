@@ -10,7 +10,7 @@ class Messages {
       editError: "Movie edited error",
       movieListingError: "Movie listing error",
       errorCreateMovie: "Error create movie repository",
-      notFind: "Not find",
+      movieIsNotFind: "Movie is not find",
       notDataToEdit: "No data to edit",
       notIdToEdit: "No id to edit",
       invalidData:

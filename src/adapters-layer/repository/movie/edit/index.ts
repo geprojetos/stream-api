@@ -26,8 +26,13 @@ class EditRepository implements IEdit {
 
   private async _validate(movie: IStream): Promise<IEditMovieResponse> {
     try {
+      const movies: IStream[] = await this._file.read();
+
       const isInvalidId = Utils.isInvalidId(movie);
       if (isInvalidId) return isInvalidId;
+
+      const isNotFind = Utils.isNotFind({ movies, movie });
+      if (isNotFind) return isNotFind;
 
       if (Utils.isValidData(movie)) return await this._success.success(movie);
 

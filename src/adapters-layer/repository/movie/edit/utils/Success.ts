@@ -3,6 +3,7 @@ import File from "../../../../utils/file";
 import Messages from "../../../../utils/messages";
 import Status from "../../../../utils/status";
 import { IStream } from "../../../../../enterprise-layer/domain";
+import Utils from "./Utils";
 
 class Success {
   private _file: File;
@@ -14,26 +15,8 @@ class Success {
   public async success(movie: IStream): Promise<IEditMovieResponse> {
     const { id } = movie;
     const movies: IStream[] = await this._file.read();
-
-    const index = movies?.findIndex((movie) => movie.id === id);
-
-    if (index === -1) {
-      return {
-        statusCode: Status.badRequest(),
-        message: Messages.movie().notFind,
-      };
-    }
-
-    const newValue: IStream = {
-      id: movies[index].id,
-      title: movie.title || movies[index].title,
-      category: movie.category || movies[index].category,
-      description: movie.description || movies[index].description,
-    };
-
-    movies.splice(index, 1, newValue);
-
-    this._file.write(movies);
+    const listEdited: IStream[] = Utils.applyEdited({ movies, movie });
+    this._file.write(listEdited);
 
     return {
       message: Messages.movie().editSuccessfully,
