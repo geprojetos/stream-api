@@ -28,7 +28,6 @@ class File {
         const fileContent = await readFileSync(this._path, {
           encoding: "utf8",
         });
-        logger.info(`success readFileSync`);
         return JSON.parse(fileContent.toString());
       }
     } catch (error: unknown) {
@@ -41,7 +40,6 @@ class File {
     try {
       if (this._path) {
         await writeFileSync(this._path, JSON.stringify(stream));
-        logger.info(`success writeFileSync`);
         return {
           statusCode: Status.created(),
         };
@@ -58,7 +56,6 @@ class File {
     try {
       if (this._path) {
         await writeFileSync(this._path, "[]");
-        logger.info(`success delete writeFileSync`);
         return {
           statusCode: Status.ok(),
         };

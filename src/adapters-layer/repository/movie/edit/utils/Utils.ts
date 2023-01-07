@@ -1,4 +1,5 @@
 import { IStream } from "../../../../../enterprise-layer/domain";
+import { logger } from "../../../../utils/logger";
 import Messages from "../../../../utils/messages";
 import Status from "../../../../utils/status";
 
@@ -24,6 +25,7 @@ class Utils {
     const index = this.getIndex({ movies, id });
 
     if (index === -1) {
+      logger.warn(`${Messages.movie().movieIsNotFind}`);
       return {
         statusCode: Status.badRequest(),
         message: Messages.movie().movieIsNotFind,
@@ -49,9 +51,10 @@ class Utils {
 
   static isInvalidId(movie: IStream) {
     if (!movie?.id) {
+      logger.warn(`${Messages.movie().idIsRequiredForEditing}`);
       return {
         statusCode: Status.badRequest(),
-        message: Messages.movie().notIdToEdit,
+        message: Messages.movie().idIsRequiredForEditing,
       };
     }
   }
@@ -61,9 +64,10 @@ class Utils {
   }
 
   static isInValidData() {
+    logger.warn(`${Messages.movie().notDataForEditing}`);
     return {
       statusCode: Status.badRequest(),
-      message: Messages.movie().notDataToEdit,
+      message: Messages.movie().notDataForEditing,
     };
   }
 }
