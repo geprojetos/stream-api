@@ -13,7 +13,7 @@ class DeleteMovieController {
     return {
       statusCode: result.statusCode,
       message: result.message,
-      id,
+      id: result.id,
     };
   }
 }
