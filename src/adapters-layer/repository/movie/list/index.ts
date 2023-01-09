@@ -18,7 +18,7 @@ class ListRepository implements IListMovieAdapter {
 
   async list(): Promise<IListMovieResponse> {
     try {
-      return await this._validate.isSuccess();
+      return await this._validate.isValidate();
     } catch (error) {
       logger.error(`${Messages.movie().movieListingError} => ${error}`);
       return Error.isError(error);

@@ -1,21 +1,17 @@
 import File from "../../../../utils/file";
-import Messages from "../../../../utils/messages";
-import Status from "../../../../utils/status";
+import Utils from "./Utils";
 
 class Validate {
   private _file: File;
+  private _utils: Utils;
 
   constructor(file: File) {
     this._file = file;
+    this._utils = new Utils(this._file);
   }
 
-  public async isSuccess() {
-    const result = await this._file.read();
-    return {
-      message: Messages.movie().listSuccessfully,
-      statusCode: Status.ok(),
-      movies: result || [],
-    };
+  public async isValidate() {
+    return this._utils.isSuccess();
   }
 }
 
