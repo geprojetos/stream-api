@@ -8,6 +8,8 @@ class Messages {
       listSuccessfully: "Movie listed successfully",
       editSuccessfully: "Movie edited successfully",
       editError: "Movie edited error",
+      deleteError: "Movie deleted error",
+      deleteSuccessfully: "Movie removed successfully",
       movieListingError: "Movie listing error",
       errorCreateMovie: "Error create movie repository",
       movieIsNotFind: "Movie is not find",
