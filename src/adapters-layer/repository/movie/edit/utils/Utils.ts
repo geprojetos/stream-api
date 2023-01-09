@@ -3,16 +3,8 @@ import File from "../../../../utils/file";
 import { logger } from "../../../../utils/logger";
 import Messages from "../../../../utils/messages";
 import Status from "../../../../utils/status";
-
-interface GetIndexProps {
-  movies: IStream[];
-  id: string | undefined;
-}
-
-interface MovieEditedProps {
-  movies: IStream[];
-  movie: IStream;
-}
+import { GetIndexProps } from "../interface/GetIndex";
+import { MovieEditProps } from "../interface/MovieEdit";
 
 class Utils {
   private _file: File;
@@ -31,7 +23,7 @@ class Utils {
     }
   }
 
-  public isNotFind(props: MovieEditedProps) {
+  public isNotFind(props: MovieEditProps) {
     const { movie, movies } = props;
     const { id } = movie;
     const index = this._getIndex({ movies, id });
@@ -70,7 +62,7 @@ class Utils {
     return movie.title || movie.category || movie.description;
   }
 
-  private _applyEdited(props: MovieEditedProps) {
+  private _applyEdited(props: MovieEditProps) {
     const { movies, movie } = props;
     const { id } = movie;
     const index = this._getIndex({ movies, id });
