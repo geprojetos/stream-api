@@ -1,7 +1,7 @@
 import Status from "../../utils/status";
 
 class Error {
-  static error(error: unknown) {
+  static isError(error: unknown) {
     return {
       statusCode: Status.badRequest(),
       message: JSON.stringify(error),

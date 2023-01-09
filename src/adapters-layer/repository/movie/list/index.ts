@@ -2,23 +2,26 @@ import File from "../../../utils/file";
 import { IListMovieAdapter } from "./interface/IListMovieAdapter";
 import { IListMovieResponse } from "../../../../application-layer/useCase/movie/list/IList";
 import { IConfig } from "../../../utils/config";
-import Success from "./utils/Success";
-import Error from "./utils/Error";
+import Validate from "./utils/Validate";
+import Error from "../../../utils/error";
+import { logger } from "../../../utils/logger";
+import Messages from "../../../utils/messages";
 
 class ListRepository implements IListMovieAdapter {
   private _file: File;
-  private _success: Success;
+  private _validate: Validate;
 
   constructor(config?: IConfig) {
     this._file = File.getInstance(config);
-    this._success = new Success(this._file);
+    this._validate = new Validate(this._file);
   }
 
   async list(): Promise<IListMovieResponse> {
     try {
-      return await this._success.success();
+      return await this._validate.isSuccess();
     } catch (error) {
-      return Error.error(error);
+      logger.error(`${Messages.movie().movieListingError} => ${error}`);
+      return Error.isError(error);
     }
   }
 }

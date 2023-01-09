@@ -2,14 +2,14 @@ import File from "../../../../utils/file";
 import Messages from "../../../../utils/messages";
 import Status from "../../../../utils/status";
 
-class Success {
+class Validate {
   private _file: File;
 
   constructor(file: File) {
     this._file = file;
   }
 
-  public async success() {
+  public async isSuccess() {
     const result = await this._file.read();
     return {
       message: Messages.movie().listSuccessfully,
@@ -19,4 +19,4 @@ class Success {
   }
 }
 
-export default Success;
+export default Validate;

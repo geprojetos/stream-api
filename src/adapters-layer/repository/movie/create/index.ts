@@ -26,7 +26,7 @@ class CreateMovieRepository implements ICreateMovieAdapter {
       return this._defaultResponse;
     } catch (error) {
       logger.error(`${Messages.movie().errorCreateMovie} => ${error}`);
-      return Error.error(error);
+      return Error.isError(error);
     }
   }
 }
