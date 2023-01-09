@@ -1,4 +1,5 @@
 import { IStream } from "../../../../../enterprise-layer/domain";
+import File from "../../../../utils/file";
 import { logger } from "../../../../utils/logger";
 import Messages from "../../../../utils/messages";
 import Status from "../../../../utils/status";
@@ -14,15 +15,26 @@ interface MovieEditedProps {
 }
 
 class Utils {
-  static getIndex = (props: GetIndexProps) => {
-    const { movies, id } = props;
-    return movies?.findIndex((movie) => movie.id === id);
-  };
+  private _file: File;
 
-  static isNotFind(props: MovieEditedProps) {
+  constructor(file: File) {
+    this._file = file;
+  }
+
+  public isInvalidId(movie: IStream) {
+    if (!movie?.id) {
+      logger.warn(`${Messages.movie().idIsRequiredForEditing}`);
+      return {
+        statusCode: Status.badRequest(),
+        message: Messages.movie().idIsRequiredForEditing,
+      };
+    }
+  }
+
+  public isNotFind(props: MovieEditedProps) {
     const { movie, movies } = props;
     const { id } = movie;
-    const index = this.getIndex({ movies, id });
+    const index = this._getIndex({ movies, id });
 
     if (index === -1) {
       logger.warn(`${Messages.movie().movieIsNotFind}`);
@@ -33,10 +45,35 @@ class Utils {
     }
   }
 
-  static applyEdited(props: MovieEditedProps) {
+  private _getIndex = (props: GetIndexProps) => {
+    const { movies, id } = props;
+    return movies?.findIndex((movie) => movie.id === id);
+  };
+
+  public async isSuccess(movie: IStream) {
+    if (this._isValidData(movie)) {
+      const { id } = movie;
+      const movies: IStream[] = await this._file.read();
+      const listEdited: IStream[] = this._applyEdited({ movies, movie });
+      this._file.write(listEdited);
+      logger.info(`${Messages.movie().editSuccessfully}`);
+
+      return {
+        message: Messages.movie().editSuccessfully,
+        statusCode: Status.created(),
+        id,
+      };
+    }
+  }
+
+  private _isValidData(movie: IStream) {
+    return movie.title || movie.category || movie.description;
+  }
+
+  private _applyEdited(props: MovieEditedProps) {
     const { movies, movie } = props;
     const { id } = movie;
-    const index = Utils.getIndex({ movies, id });
+    const index = this._getIndex({ movies, id });
 
     const newValue: IStream = {
       id: movies[index].id,
@@ -49,21 +86,7 @@ class Utils {
     return movies;
   }
 
-  static isInvalidId(movie: IStream) {
-    if (!movie?.id) {
-      logger.warn(`${Messages.movie().idIsRequiredForEditing}`);
-      return {
-        statusCode: Status.badRequest(),
-        message: Messages.movie().idIsRequiredForEditing,
-      };
-    }
-  }
-
-  static isValidData(movie: IStream) {
-    return movie.title || movie.category || movie.description;
-  }
-
-  static isInValidData() {
+  public isInValidData() {
     logger.warn(`${Messages.movie().notDataForEditing}`);
     return {
       statusCode: Status.badRequest(),
