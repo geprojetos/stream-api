@@ -11,7 +11,10 @@ class Validate {
   }
 
   public async isValidate(id: string) {
-    return this._utils.isSuccess(id);
+    const isNotFind = await this._utils.isNotFind(id);
+    if (isNotFind) return isNotFind;
+
+    return await this._utils.isSuccess(id);
   }
 }
 

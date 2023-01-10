@@ -22,7 +22,7 @@ class File {
     this._path = config.fullPath;
   }
 
-  async read() {
+  async read(): Promise<IStream[]> {
     try {
       if (this._path) {
         const fileContent = await readFileSync(this._path, {
@@ -30,8 +30,25 @@ class File {
         });
         return JSON.parse(fileContent.toString());
       }
+      return [];
     } catch (error: unknown) {
       logger.error(`error readFileSync, ${error}`);
+      return [];
+    }
+  }
+
+  async findById(id: string): Promise<IStream[]> {
+    try {
+      if (this._path) {
+        const fileContent: IStream[] = await this.read();
+        const response: IStream[] = fileContent.filter(
+          (movie) => movie.id === id
+        );
+        return response || [];
+      }
+      return [];
+    } catch (error: unknown) {
+      logger.error(`error findById, ${error}`);
       return [];
     }
   }
@@ -62,6 +79,25 @@ class File {
       }
     } catch (error) {
       logger.error(`error delete writeFileSync, ${error}`);
+      return {
+        statusCode: Status.badRequest(),
+      };
+    }
+  }
+
+  async deleteById(id: string) {
+    try {
+      if (this._path) {
+        const movies = await this.read();
+        const newMovieList = movies.filter((movie) => movie.id !== id);
+        await this.write(newMovieList);
+        return {
+          statusCode: Status.ok(),
+          id,
+        };
+      }
+    } catch (error) {
+      logger.error(`error deleteById, ${error}`);
       return {
         statusCode: Status.badRequest(),
       };

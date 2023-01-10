@@ -10,6 +10,7 @@ class Messages {
       editError: "Movie edited error",
       deleteError: "Movie deleted error",
       deleteSuccessfully: "Movie removed successfully",
+      isNotFindMovieForDelete: "Is not find movie for deleteById",
       movieListingError: "Movie listing error",
       errorCreateMovie: "Error create movie repository",
       movieIsNotFind: "Movie is not find",

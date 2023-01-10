@@ -1,4 +1,4 @@
-import { ICreateMovieResponse } from "../../../../application-layer/useCase/movie";
+import { IDeleteMovieResponse } from "../../../../application-layer/useCase/movie";
 import { IConfig } from "../../../utils/config";
 import Error from "../../../utils/error";
 import File from "../../../utils/file";
@@ -16,10 +16,9 @@ class DeleteMovieRepository implements IDeleteMovieAdapter {
     this._validate = new Validate(this._file);
   }
 
-  public async delete(id: string): Promise<ICreateMovieResponse> {
+  public async delete(id: string): Promise<IDeleteMovieResponse> {
     try {
-      const response = await this._validate.isValidate(id);
-      return response;
+      return await this._validate.isValidate(id);
     } catch (error) {
       logger.error(`${Messages.movie().deleteError} => ${error}`);
       return Error.isError(error);
