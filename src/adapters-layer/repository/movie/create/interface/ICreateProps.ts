@@ -2,7 +2,7 @@ import { IStream, Stream } from "../../../../../enterprise-layer/domain";
 
 interface ICreateMovieProps {
   movie: Stream;
-  contentFile?: IStream[];
+  movies?: IStream[];
   isAlready?: IStream[];
 }
 

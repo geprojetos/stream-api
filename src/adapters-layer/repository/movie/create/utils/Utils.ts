@@ -13,7 +13,7 @@ class Utils {
   }
 
   public isInValid(movie: Stream) {
-    if (this._isValue(movie)) {
+    if (this._isInvalidValue(movie)) {
       logger.error(`${Messages.movie().invalidData}`);
       return {
         statusCode: Status.badRequest(),
@@ -22,7 +22,7 @@ class Utils {
     }
   }
 
-  private _isValue(movie: Stream) {
+  private _isInvalidValue(movie: Stream) {
     return (
       !movie.stream().title ||
       !movie.stream().category ||
@@ -31,14 +31,16 @@ class Utils {
   }
 
   public async isAlreadyExisting(movie: Stream) {
-    const contentFile: IStream[] = await this._file.read();
-    const isAlready = this._isDuplicated({
-      contentFile,
+    const movies: IStream[] = await this._file.read();
+    const isDuplicated = this._isDuplicated({
+      movies,
       movie,
     });
 
-    if (isAlready?.length) {
-      logger.warn(`${Messages.movie().alreadyExisting} -> ${isAlready[0].id}`);
+    if (isDuplicated?.length) {
+      logger.warn(
+        `${Messages.movie().alreadyExisting} -> ${isDuplicated[0].id}`
+      );
       return {
         statusCode: Status.conflict(),
         message: Messages.movie().alreadyExisting,
@@ -48,24 +50,21 @@ class Utils {
   }
 
   private _isDuplicated(props: ICreateMovieProps) {
-    const { contentFile, movie } = props;
-
-    return contentFile?.filter(
-      (content) => content.title === movie?.stream().title
-    );
+    const { movies, movie } = props;
+    return movies?.filter((content) => content.title === movie?.stream().title);
   }
 
   public async isSuccess(movie: Stream) {
-    const contentFile: IStream[] = await this._file.read();
+    const movies: IStream[] = await this._file.read();
     const isDuplicated = this._isDuplicated({
-      contentFile,
+      movies,
       movie,
     });
 
     if (!isDuplicated?.length) {
-      contentFile?.push(movie.stream());
+      movies?.push(movie.stream());
       logger.info(`${Messages.movie().saveInDataBase} => ${movie.stream().id}`);
-      const response = await this._file.write(contentFile || []);
+      const response = await this._file.write(movies || []);
       return {
         statusCode: response?.statusCode || Status.badRequest(),
         message: Messages.movie().saveInDataBase,
