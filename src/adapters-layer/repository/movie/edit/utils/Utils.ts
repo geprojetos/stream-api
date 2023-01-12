@@ -23,12 +23,12 @@ class Utils {
     }
   }
 
-  public isNotFind(props: MovieEditProps) {
-    const { movie, movies } = props;
+  public async isNotFind(props: MovieEditProps) {
+    const { movie } = props;
     const { id } = movie;
-    const index = this._getIndex({ movies, id });
+    const isFindById = await this._file.findById(id || "");
 
-    if (index === -1) {
+    if (!isFindById.length) {
       logger.warn(`${Messages.movie().movieIsNotFind}`);
       return {
         statusCode: Status.badRequest(),
@@ -37,17 +37,12 @@ class Utils {
     }
   }
 
-  private _getIndex = (props: GetIndexProps) => {
-    const { movies, id } = props;
-    return movies?.findIndex((movie) => movie.id === id);
-  };
-
   public async isSuccess(movie: IStream) {
     if (this._isValidData(movie)) {
       const { id } = movie;
       const movies: IStream[] = await this._file.read();
-      const listEdited: IStream[] = this._applyEdited({ movies, movie });
-      this._file.write(listEdited);
+      const editedList: IStream[] = this._applyEdited({ movies, movie });
+      this._file.write(editedList);
       logger.info(`${Messages.movie().editSuccessfully}`);
 
       return {
@@ -77,6 +72,11 @@ class Utils {
     movies.splice(index, 1, newValue);
     return movies;
   }
+
+  private _getIndex = (props: GetIndexProps) => {
+    const { movies, id } = props;
+    return movies?.findIndex((movie) => movie.id === id);
+  };
 
   public isInValidData() {
     logger.warn(`${Messages.movie().notDataForEditing}`);

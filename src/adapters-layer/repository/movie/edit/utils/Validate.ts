@@ -17,7 +17,7 @@ class Validate {
     const isInvalidId = this._utils.isInvalidId(movie);
     if (isInvalidId) return isInvalidId;
 
-    const isNotFind = this._utils.isNotFind({ movies, movie });
+    const isNotFind = await this._utils.isNotFind({ movies, movie });
     if (isNotFind) return isNotFind;
 
     const isSuccess = await this._utils.isSuccess(movie);

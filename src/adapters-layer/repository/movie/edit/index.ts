@@ -19,7 +19,7 @@ class EditRepository implements IEdit {
 
   async edit(movie: IStream): Promise<IEditMovieResponse> {
     try {
-      return this._validate.isValidate(movie);
+      return await this._validate.isValidate(movie);
     } catch (error) {
       logger.error(`${Messages.movie().editError} => ${error}`);
       return Error.isError(error);

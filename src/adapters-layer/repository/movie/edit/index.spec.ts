@@ -25,6 +25,11 @@ describe("EditRepository", async () => {
     category: "",
     description: "",
   };
+  const movieEditTest: IStream = {
+    title: "movie edited",
+    category: "movie edited",
+    description: "movie edited",
+  };
   let createMovieRepository: CreateMovieRepository;
   let editRepository: EditRepository;
   let listRepository: ListRepository;
@@ -42,12 +47,17 @@ describe("EditRepository", async () => {
     await file.delete();
   });
 
-  test("should be able not edit [id] movie with status code 400", async () => {
+  test("should be able not edit [without id] movie with status code 400", async () => {
     const result = await editRepository.edit(movieSecondEditTest);
     expect(result.statusCode).toBe(Status.badRequest());
   });
 
-  test("should be able not edit [information] movie with status code 400", async () => {
+  test("should be able not edit [without information] movie with status code 400", async () => {
+    const result = await editRepository.edit(movieThirdEditTest);
+    expect(result.statusCode).toBe(Status.badRequest());
+  });
+
+  test("should be able not edit [is not find] movie with status code 400", async () => {
     const result = await editRepository.edit(movieThirdEditTest);
     expect(result.statusCode).toBe(Status.badRequest());
   });
@@ -58,9 +68,9 @@ describe("EditRepository", async () => {
     );
     const createResult: IStream = {
       id: create.stream?.id || "",
-      title: create.stream?.title || "",
-      category: create.stream?.category || "",
-      description: create.stream?.description || "",
+      title: movieEditTest.title,
+      category: movieEditTest.category,
+      description: movieEditTest.description,
     };
 
     await editRepository.edit(createResult);
