@@ -9,21 +9,14 @@ import { logger } from "../../../utils/logger";
 
 class CreateMovieRepository implements ICreateMovieAdapter {
   private _validate: Validate;
-  private _defaultResponse: ICreateMovieResponse;
 
   constructor(config?: IConfig) {
     this._validate = new Validate(config);
-    this._defaultResponse = {
-      message: "",
-      statusCode: 0,
-    };
   }
 
   public async create(movie: Stream): Promise<ICreateMovieResponse> {
     try {
-      const response = await this._validate.isValidate(movie);
-      if (response) return response;
-      return this._defaultResponse;
+      return await this._validate.isValidate(movie);
     } catch (error) {
       logger.error(`${Messages.movie().errorCreateMovie} => ${error}`);
       return Error.isError(error);

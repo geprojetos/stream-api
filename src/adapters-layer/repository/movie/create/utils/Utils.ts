@@ -55,22 +55,19 @@ class Utils {
   }
 
   public async isSuccess(movie: Stream) {
-    const movies: IStream[] = await this._file.read();
-    const isDuplicated = this._isDuplicated({
-      movies,
-      movie,
-    });
+    const response = await this._isApply(movie);
+    logger.info(`${Messages.movie().saveInDataBase} => ${movie.stream().id}`);
+    return {
+      statusCode: response?.statusCode || Status.badRequest(),
+      message: Messages.movie().saveInDataBase,
+      stream: movie.stream(),
+    };
+  }
 
-    if (!isDuplicated?.length) {
-      movies?.push(movie.stream());
-      logger.info(`${Messages.movie().saveInDataBase} => ${movie.stream().id}`);
-      const response = await this._file.write(movies || []);
-      return {
-        statusCode: response?.statusCode || Status.badRequest(),
-        message: Messages.movie().saveInDataBase,
-        stream: movie.stream(),
-      };
-    }
+  private async _isApply(movie: Stream) {
+    const movies: IStream[] = await this._file.read();
+    movies?.push(movie.stream());
+    return await this._file.write(movies || []);
   }
 }
 
