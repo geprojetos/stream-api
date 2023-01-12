@@ -23,8 +23,7 @@ class Utils {
     }
   }
 
-  public async isNotFind(props: MovieEditProps) {
-    const { movie } = props;
+  public async isNotFind(movie: IStream) {
     const { id } = movie;
     const isFindById = await this._file.findById(id || "");
 

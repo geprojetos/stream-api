@@ -12,12 +12,10 @@ class Validate {
   }
 
   public async isValidate(movie: IStream) {
-    const movies: IStream[] = await this._file.read();
-
     const isInvalidId = this._utils.isInvalidId(movie);
     if (isInvalidId) return isInvalidId;
 
-    const isNotFind = await this._utils.isNotFind({ movies, movie });
+    const isNotFind = await this._utils.isNotFind(movie);
     if (isNotFind) return isNotFind;
 
     const isSuccess = await this._utils.isSuccess(movie);
