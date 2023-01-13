@@ -1,0 +1,121 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Stream API Documentation",
+    "version": "1.0.0"
+  },
+  "servers": [
+    { "url": "http://localhost:3333/", "description": "API is running" }
+  ],
+  "paths": {
+    "/movie/create": {
+      "post": {
+        "tags": ["Movie"],
+        "summary": "Create movie",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MovieRequest"
+              },
+              "examples": {
+                "valid": {
+                  "$ref": "#/examples/movie/create/valid"
+                },
+                "invalid": {
+                  "$ref": "#/examples/movie/create/inValid"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MovieRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          }
+        }
+      },
+      "MovieResponse": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string"
+          },
+          "stream": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  },
+  "examples": {
+    "movie": {
+      "create": {
+        "valid": {
+          "summary": "Create valid example",
+          "value": {
+            "title": "Title",
+            "description": "Description",
+            "category": "Category"
+          }
+        },
+        "inValid": {
+          "summary": "Create invalid example",
+          "value": {
+            "title": "",
+            "description": "",
+            "category": ""
+          }
+        }
+      }
+    }
+  }
+}
