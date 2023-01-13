@@ -12,13 +12,10 @@ class Delete {
   }
 
   private route() {
-    this._express.delete(
-      `${this._baseUrl}/delete`,
-      async (request, response) => {
-        const result = await deleteMoviePresentation.execute(request);
-        return response.send(result);
-      }
-    );
+    this._express.delete(`${this._baseUrl}`, async (request, response) => {
+      const result = await deleteMoviePresentation.execute(request);
+      return response.send(result);
+    });
   }
 }
 

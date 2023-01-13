@@ -117,9 +117,7 @@
             }
           }
         }
-      }
-    },
-    "/movie/delete": {
+      },
       "delete": {
         "tags": ["Movie"],
         "summary": "Delete movie",
