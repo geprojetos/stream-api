@@ -11,6 +11,10 @@ class Status {
     return 400;
   }
 
+  static notFind() {
+    return 404;
+  }
+
   static conflict() {
     return 409;
   }

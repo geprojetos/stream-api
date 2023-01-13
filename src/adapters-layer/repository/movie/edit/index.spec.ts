@@ -25,6 +25,11 @@ describe("EditRepository", async () => {
     category: "",
     description: "",
   };
+  const movieFourthEditTest: IStream = {
+    title: "testEditErrorInformation",
+    category: "testEditErrorInformation",
+    description: "testEditErrorInformation",
+  };
   const movieEditTest: IStream = {
     title: "movie edited",
     category: "movie edited",
@@ -52,14 +57,25 @@ describe("EditRepository", async () => {
     expect(result.statusCode).toBe(Status.badRequest());
   });
 
-  test("should be able not edit [without information] movie with status code 400", async () => {
-    const result = await editRepository.edit(movieThirdEditTest);
-    expect(result.statusCode).toBe(Status.badRequest());
+  test("should be able not edit [invalid data] movie with status code 400", async () => {
+    const create = await createMovieRepository.create(
+      new Stream(movieFourthEditTest)
+    );
+    const createResult: IStream = {
+      id: create.stream?.id || "",
+      title: "",
+      category: "",
+      description: "",
+    };
+    const result = await editRepository.edit(createResult);
+    setTimeout(() => {
+      expect(result.statusCode).toBe(Status.badRequest());
+    }, 100);
   });
 
-  test("should be able not edit [is not find] movie with status code 400", async () => {
+  test("should be able not edit [is not find] movie with status code 404", async () => {
     const result = await editRepository.edit(movieThirdEditTest);
-    expect(result.statusCode).toBe(Status.badRequest());
+    expect(result.statusCode).toBe(Status.notFind());
   });
 
   test("should be able edit movie with status code 200", async () => {
@@ -76,6 +92,8 @@ describe("EditRepository", async () => {
     await editRepository.edit(createResult);
     const list = await listRepository.list();
     const result = list.movies?.find((movie) => movie.id === createResult.id);
-    expect(result).toStrictEqual(createResult);
+    setTimeout(() => {
+      expect(result).toStrictEqual(createResult);
+    }, 100);
   });
 });

@@ -12,7 +12,7 @@ class Validate {
   }
 
   public async isValidate(movie: IStream) {
-    const isInvalidId = this._utils.isInvalidId(movie);
+    const isInvalidId = await this._utils.isInvalidId(movie);
     if (isInvalidId) return isInvalidId;
 
     const isNotFind = await this._utils.isNotFind(movie);

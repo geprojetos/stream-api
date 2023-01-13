@@ -13,7 +13,7 @@ class Utils {
     this._file = file;
   }
 
-  public isInvalidId(movie: IStream) {
+  public async isInvalidId(movie: IStream) {
     if (!movie?.id) {
       logger.warn(`${Messages.movie().idIsRequiredForEditing}`);
       return {
@@ -30,7 +30,7 @@ class Utils {
     if (!isFindById.length) {
       logger.warn(`${Messages.movie().movieIsNotFind}`);
       return {
-        statusCode: Status.badRequest(),
+        statusCode: Status.notFind(),
         message: Messages.movie().movieIsNotFind,
       };
     }
