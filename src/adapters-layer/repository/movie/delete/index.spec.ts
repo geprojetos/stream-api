@@ -30,9 +30,9 @@ describe("DeleteMovieRepository", async () => {
     await file.delete();
   });
 
-  test("should be able not delete movie with invalid [ID] status 400", async () => {
+  test("should be able not delete movie [is not find] status 404", async () => {
     const result = deleteMovieRepository.delete("");
-    expect((await result).statusCode).toBe(Status.badRequest());
+    expect((await result).statusCode).toBe(Status.notFind());
   });
 
   test("should be able delete movie with status 200", async () => {

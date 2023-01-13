@@ -16,7 +16,7 @@ class Utils {
     if (!id || !isNotFind.length) {
       logger.error(`${Messages.movie().isNotFindMovieForDelete}, ${id}`);
       return {
-        statusCode: Status.badRequest(),
+        statusCode: Status.notFind(),
         message: Messages.movie().isNotFindMovieForDelete,
         id,
       };
