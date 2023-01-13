@@ -12,7 +12,7 @@ class MovieRoutes {
   }
 
   private route() {
-    this._express.get(`${this._baseUrl}/list`, async (request, response) => {
+    this._express.get(`${this._baseUrl}`, async (request, response) => {
       const result = await listMoviePresentation.execute(request);
       return response.send(result);
     });

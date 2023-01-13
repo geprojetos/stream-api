@@ -61,9 +61,7 @@
             }
           }
         }
-      }
-    },
-    "/movie/list": {
+      },
       "get": {
         "tags": ["Movie"],
         "summary": "List movies",
