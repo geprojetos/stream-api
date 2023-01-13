@@ -8,7 +8,7 @@
     { "url": "http://localhost:3333/", "description": "API is running" }
   ],
   "paths": {
-    "/movie/create": {
+    "/movie": {
       "post": {
         "tags": ["Movie"],
         "summary": "Create movie",

@@ -12,7 +12,7 @@ class MovieRoutes {
   }
 
   private create() {
-    this.express.post(`${this._baseUrl}/create`, async (request, response) => {
+    this.express.post(`${this._baseUrl}`, async (request, response) => {
       const result = await createMoviePresentation.execute(request);
       return response.send(result);
     });
