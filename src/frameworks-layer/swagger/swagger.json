@@ -16,7 +16,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MovieRequest"
+                "$ref": "#/components/schemas/CreateMovieRequest"
               },
               "examples": {
                 "valid": {
@@ -35,7 +35,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MovieResponse"
+                  "$ref": "#/components/schemas/CreateMovieResponse"
                 }
               }
             }
@@ -45,7 +45,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MovieResponse"
+                  "$ref": "#/components/schemas/CreateMovieResponse"
                 }
               }
             }
@@ -55,7 +55,30 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MovieResponse"
+                  "$ref": "#/components/schemas/CreateMovieResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movie/list": {
+      "get": {
+        "tags": ["Movie"],
+        "summary": "List movies",
+        "requestBody": {
+          "content": {
+            "application/json": {}
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListMovieResponse"
                 }
               }
             }
@@ -66,7 +89,7 @@
   },
   "components": {
     "schemas": {
-      "MovieRequest": {
+      "CreateMovieRequest": {
         "type": "object",
         "properties": {
           "title": {
@@ -80,7 +103,7 @@
           }
         }
       },
-      "MovieResponse": {
+      "CreateMovieResponse": {
         "type": "object",
         "properties": {
           "statusCode": {
@@ -91,6 +114,37 @@
           },
           "stream": {
             "type": "object"
+          }
+        }
+      },
+      "ListMovieResponse": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string"
+          },
+          "movies": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
