@@ -12,7 +12,7 @@ class Edit {
   }
 
   private route() {
-    this._express.patch(`${this._baseUrl}/edit`, async (request, response) => {
+    this._express.patch(`${this._baseUrl}`, async (request, response) => {
       const result = await editMoviePresentation.execute(request);
       return response.send(result);
     });

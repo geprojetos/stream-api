@@ -82,9 +82,7 @@
             }
           }
         }
-      }
-    },
-    "/movie/edit": {
+      },
       "patch": {
         "tags": ["Movie"],
         "summary": "Edit movie",
